@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Primer Servlet</title>
+    <meta charset="windows-1252">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: #f8b400; /* Naranja */
+            color: #0b3d91; /* Azul oscuro */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Contenedor del formulario */
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+            border: 3px solid #0b3d91;
+        }
+
+        form:hover {
+            transform: scale(1.05);
+        }
+
+        /* Tabla */
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            border: 1px solid #0b3d91;
+        }
+
+        td {
+            padding: 10px;
+        }
+
+        /* Inputs */
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #0b3d91;
+            background-color: #f0f8ff;
+            color: #0b3d91;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #f77f00;
+            box-shadow: 0 0 8px #f77f00;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #0b3d91;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out, transform 0.2s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #f77f00;
+            transform: scale(1.05);
+        }
+
+        /* Animación de aparición */
+        div {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            color: #0b3d91;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <form action="PrimerServlet" method="post">
+        <table width="300" border="1" cellpadding="5">
+            <tr>
+                <td width="113">login</td>    
+                <td width="155"><input type="text" size="20" name="username"></td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td><input type="text" size="20" name="passwd" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="enviar" /></td>
+            </tr>
+        </table>
+    </form>
+    <div>Thomas Sanmiguel y Sebastian Revelo</div>
+</body>
+</html>
