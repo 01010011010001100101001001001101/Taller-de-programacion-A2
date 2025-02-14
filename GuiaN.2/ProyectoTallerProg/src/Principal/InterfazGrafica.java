@@ -1,36 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Principal;
-
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.RegistroUsuario;
-
 /**
  *
- * @author Usuario
+ * @author Thomas Sanmiguel y Sebastian Revelo
  */
 public class InterfazGrafica extends javax.swing.JFrame {
-    
-    // Instancia para las operaciones CRUD
     private final RegistroUsuario registro;
-
-    /**
-     * Creates new form Interfaz
-     */
     public InterfazGrafica() {
         initComponents();
-        // Inicializar la lógica de registros (o controlador)
         registro = new RegistroUsuario();
-        // Mostrar lista de usuarios al arrancar
         mostrarUsuariosEnTextArea();
     }
-
-    /**
-     * Muestra en txtAreaInfo todos los usuarios almacenados.
-     */
     private void mostrarUsuariosEnTextArea() {
         List<RegistroUsuario> usuarios = registro.listarRegistros();
         if (usuarios.isEmpty()) {
@@ -43,7 +25,6 @@ public class InterfazGrafica extends javax.swing.JFrame {
             txtAreaInfo.setText(sb.toString());
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -279,151 +260,106 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        try {
+         try {
             String id = txfieldID.getText().trim();
             String nombre = txfieldNombre.getText().trim();
             String edadStr = txfieldEdad.getText().trim();
-
             if (id.isEmpty() || nombre.isEmpty() || edadStr.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
-                        "Por favor, complete todos los campos: ID, Nombre y Edad.",
-                        "Campos incompletos",
-                        JOptionPane.WARNING_MESSAGE);
+                        "Por favor, complete todos los campos: ID, Nombre y Edad.","Campos incompletos",JOptionPane.WARNING_MESSAGE);
                 return;
             }
-
+            if (registro.existeID(id)) {
+                JOptionPane.showMessageDialog(this,
+                        "El ID ingresado ya está registrado. Use otro ID.","ID Duplicado",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!nombre.matches("^[a-zA-Z ]+$")) {
+                JOptionPane.showMessageDialog(this,
+                        "El nombre debe contener solo letras y espacios.","Nombre Inválido", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             int edad = Integer.parseInt(edadStr);
-            // Crear el usuario y agregar
             RegistroUsuario nuevo = new RegistroUsuario(id, nombre, edad);
             if (registro.agregarRegistro(nuevo)) {
                 JOptionPane.showMessageDialog(this,
-                        "Usuario agregado exitosamente.",
-                        "Éxito",
-                        JOptionPane.INFORMATION_MESSAGE);
+                        "Usuario agregado exitosamente.","Éxito",JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this,
-                        "Error al agregar usuario (posible ID duplicado).",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                        "Error al agregar usuario.","Error",JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this,
-                    "La edad debe ser un número entero.",
-                    "Formato inválido",
-                    JOptionPane.ERROR_MESSAGE);
+                    "La edad debe ser un número entero.","Formato inválido",JOptionPane.ERROR_MESSAGE);
         }
-
-        // Refrescamos la lista de usuarios en el TextArea
         mostrarUsuariosEnTextArea();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // Pedimos el ID por JOptionPane
         String id = JOptionPane.showInputDialog(this,
-                "Ingrese ID del usuario a editar:",
-                "Editar Usuario",
-                JOptionPane.QUESTION_MESSAGE);
+                "Ingrese ID del usuario a editar:","Editar Usuario",JOptionPane.QUESTION_MESSAGE);
         if (id == null || id.isBlank()) {
-            return; // Cancelado o vacío
-        }
-
-        // Buscamos el usuario
-        RegistroUsuario usuarioEditar = registro.buscar(id);
-        if (usuarioEditar == null) {
-            JOptionPane.showMessageDialog(this,
-                    "Usuario no encontrado (ID inválido).",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        // Preguntamos qué desea editar (Nombre, Edad o Ambos)
-        Object[] opciones = { "Nombre", "Edad", "Ambos" };
+        RegistroUsuario usuarioEditar = registro.buscar(id);
+        if (usuarioEditar == null) {
+            JOptionPane.showMessageDialog(this,"Usuario no encontrado (ID inválido).", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Object[] opciones = {"Nombre", "Edad", "Ambos"};
         int opcionEdicion = JOptionPane.showOptionDialog(
                 this,
-                "¿Qué desea editar?",
-                "Editar Usuario",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null, 
-                opciones, 
+                "¿Qué desea editar?","Editar Usuario", JOptionPane.DEFAULT_OPTION,JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
                 opciones[0]
         );
-        // Devuelve 0 (Nombre), 1 (Edad), 2 (Ambos), o -1 si cierra
-
         if (opcionEdicion == -1) {
-            return; // Cerró la ventana de opciones
+            return; 
         }
-
         switch (opcionEdicion) {
             case 0 -> { // Editar solo Nombre
-                String nuevoNombre = JOptionPane.showInputDialog(this,
-                        "Nuevo Nombre:",
-                        usuarioEditar.getNombre());
+                String nuevoNombre = JOptionPane.showInputDialog(this,"Nuevo Nombre:",usuarioEditar.getNombre());
                 if (nuevoNombre != null && !nuevoNombre.isBlank()) {
                     usuarioEditar.setNombre(nuevoNombre);
                 }
             }
             case 1 -> { // Editar solo Edad
-                String nuevaEdadStr = JOptionPane.showInputDialog(this,
-                        "Nueva Edad:",
-                        String.valueOf(usuarioEditar.getEdad()));
+                String nuevaEdadStr = JOptionPane.showInputDialog(this,"Nueva Edad:",String.valueOf(usuarioEditar.getEdad()));
                 if (nuevaEdadStr != null && !nuevaEdadStr.isBlank()) {
                     try {
                         int nuevaEdad = Integer.parseInt(nuevaEdadStr);
                         usuarioEditar.setEdad(nuevaEdad);
                     } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(this,
-                                "La edad debe ser un número entero.",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this,"La edad debe ser un número entero.","Error",JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                 }
             }
             case 2 -> { // Editar ambos
-                // Nombre
-                String nuevoNombre = JOptionPane.showInputDialog(this,
-                        "Nuevo Nombre:",
-                        usuarioEditar.getNombre());
+                String nuevoNombre = JOptionPane.showInputDialog(this,"Nuevo Nombre:", usuarioEditar.getNombre());
                 if (nuevoNombre != null && !nuevoNombre.isBlank()) {
                     usuarioEditar.setNombre(nuevoNombre);
                 }
-                // Edad
-                String nuevaEdadStr = JOptionPane.showInputDialog(this,
-                        "Nueva Edad:",
-                        String.valueOf(usuarioEditar.getEdad()));
+                String nuevaEdadStr = JOptionPane.showInputDialog(this,"Nueva Edad:",String.valueOf(usuarioEditar.getEdad()));
                 if (nuevaEdadStr != null && !nuevaEdadStr.isBlank()) {
                     try {
                         int nuevaEdad = Integer.parseInt(nuevaEdadStr);
                         usuarioEditar.setEdad(nuevaEdad);
                     } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(this,
-                                "La edad debe ser un número entero.",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this,"La edad debe ser un número entero.","Error",JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                }
+                }   
             }
         }
-
-        // Guardamos los cambios
         boolean actualizado = registro.editarRegistro(usuarioEditar);
         if (actualizado) {
-            JOptionPane.showMessageDialog(this,
-                    "Usuario actualizado correctamente.",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Usuario actualizado correctamente.","Éxito",JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this,
-                    "Error al actualizar usuario.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Error al actualizar usuario.","Error",JOptionPane.ERROR_MESSAGE);
         }
-
-        // Refrescamos la lista en el txtAreaInfo
-        mostrarUsuariosEnTextArea();                                    
+        mostrarUsuariosEnTextArea();                                   
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -434,7 +370,6 @@ public class InterfazGrafica extends javax.swing.JFrame {
         if (id == null || id.isBlank()) {
             return;
         }
-
         RegistroUsuario encontrado = registro.buscar(id);
         if (encontrado != null) {
             JOptionPane.showMessageDialog(this,
@@ -450,50 +385,28 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        String id = JOptionPane.showInputDialog(this,
-                "Ingrese ID del usuario a eliminar:",
-                "Eliminar Usuario",
-                JOptionPane.QUESTION_MESSAGE);
-        if (id == null || id.isBlank()) {
-            return;
-        }
-
+        String id = JOptionPane.showInputDialog(this, "Ingrese ID del usuario a eliminar:");
         if (registro.borrarRegistro(id)) {
-            JOptionPane.showMessageDialog(this,
-                    "Usuario eliminado correctamente.",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Usuario eliminado correctamente.");
         } else {
-            JOptionPane.showMessageDialog(this,
-                    "Error al eliminar usuario (ID no encontrado).",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al eliminar usuario.");
         }
-
-        // Refrescamos la lista en el txtAreaInfo
         mostrarUsuariosEnTextArea();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-         int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "¿Está seguro de que desea SALIR y ELIMINAR todos los datos?",
-                "Confirmar salida",
+        int confirm = JOptionPane.showConfirmDialog(
+                this,"¿Está seguro de que desea SALIR y ELIMINAR todos los datos?", "Confirmar salida",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.WARNING_MESSAGE
         );
-
         if (confirm == JOptionPane.YES_OPTION) {
             registro.borrarTodo();
+            JOptionPane.showMessageDialog(this, "Todos los datos han sido eliminados.");
             System.exit(0);
         }
     }//GEN-LAST:event_btnSalirActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -515,16 +428,12 @@ public class InterfazGrafica extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(InterfazGrafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new InterfazGrafica().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
