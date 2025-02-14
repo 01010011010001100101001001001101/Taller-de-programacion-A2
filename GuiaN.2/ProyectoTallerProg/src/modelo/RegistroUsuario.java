@@ -5,7 +5,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 /**
  *
- * @author Thomas Sanmiguel y Sebastian Revelo 
+ * @author Thomas Sanmiguel y Sebastián Revelo 
  */
 public class RegistroUsuario implements IGestionDatos {
     private static final String FILE_NAME = "src/data/usuarios.txt";
