@@ -1,5 +1,4 @@
 package vista;
-
 import controlador.UsuarioController;
 import modelo.Usuario;
 import exceptions.DAOException;
@@ -14,6 +13,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+/**
+ *
+ * @author Thomas Sanmiguel y Sebastian Revelo
+ */
 public class UsuarioView extends JFrame {
     private UsuarioController controller;
     private DefaultTableModel tableModel;
