@@ -18,6 +18,8 @@ import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -42,78 +44,205 @@ public class UsuarioView extends JFrame {
     }
 
     private void initComponents() {
+         /*
+         * Establecemos FlatLaf y algunas propiedades
+         */
+        try {
+            FlatLightLaf.setup();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        UIManager.put("Button.arc", 30);
+        UIManager.put("TextComponent.arc", 10);
+
         setTitle("Gestión de Usuarios");
-        setLayout(new BorderLayout(10, 10));
-        setSize(800, 600);          
-        setLocationRelativeTo(null); 
-        setResizable(false);        
-        // Panel de formulario
-        JPanel panelForm = new JPanel(new GridLayout(5, 2, 5, 5));
-        panelForm.add(new JLabel("Tipo ID:"));
-        txtTipoID = new JTextField();
-        panelForm.add(txtTipoID);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(800, 600);
+        setLocationRelativeTo(null);
+        setResizable(false);
 
-        panelForm.add(new JLabel("Número ID:"));
-        txtNroID = new JTextField();
-        panelForm.add(txtNroID);
+        /*
+         * Panel principal con borde y separación
+         */
+        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+        mainPanel.setBorder(new EmptyBorder(10,10,10,10)); // margen alrededor
+        mainPanel.setBackground(new Color(0xF2F5F8));      // fondo gris claro
+        setContentPane(mainPanel);
 
-        panelForm.add(new JLabel("Nombres:"));
-        txtNombres = new JTextField();
-        panelForm.add(txtNombres);
+        /*
+         * 1. Panel Formulario (arriba)
+         */
+        JPanel panelForm = new JPanel(new GridBagLayout());
+        panelForm.setBackground(new Color(0xE0E4F8)); // un celeste claro, por ejemplo
+        panelForm.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.GRAY, 1),
+                "Datos de Usuario",
+                TitledBorder.LEFT,
+                TitledBorder.TOP,
+                new Font("Arial", Font.BOLD, 14), 
+                Color.DARK_GRAY
+        ));
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // espacio entre componentes
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        panelForm.add(new JLabel("Correo:"));
-        txtCorreo = new JTextField();
-        panelForm.add(txtCorreo);
+        JLabel lblTipoID = new JLabel("Tipo ID:");
+        txtTipoID = new JTextField(15);
 
-        panelForm.add(new JLabel("Celular:"));
-        txtCelular = new JTextField();
-        panelForm.add(txtCelular);
+        JLabel lblNroID = new JLabel("Número ID:");
+        txtNroID = new JTextField(15);
 
-        // Panel de botones
-        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JLabel lblNombres = new JLabel("Nombres:");
+        txtNombres = new JTextField(15);
+
+        JLabel lblCorreo = new JLabel("Correo:");
+        txtCorreo = new JTextField(15);
+
+        JLabel lblCelular = new JLabel("Celular:");
+        txtCelular = new JTextField(15);
+
+        // Fila 0: Tipo ID
+        gbc.gridx = 0; gbc.gridy = 0;
+        panelForm.add(lblTipoID, gbc);
+        gbc.gridx = 1; 
+        panelForm.add(txtTipoID, gbc);
+
+        // Fila 1: Número ID
+        gbc.gridx = 0; gbc.gridy = 1;
+        panelForm.add(lblNroID, gbc);
+        gbc.gridx = 1;
+        panelForm.add(txtNroID, gbc);
+
+        // Fila 2: Nombres
+        gbc.gridx = 0; gbc.gridy = 2;
+        panelForm.add(lblNombres, gbc);
+        gbc.gridx = 1;
+        panelForm.add(txtNombres, gbc);
+
+        // Fila 3: Correo
+        gbc.gridx = 0; gbc.gridy = 3;
+        panelForm.add(lblCorreo, gbc);
+        gbc.gridx = 1;
+        panelForm.add(txtCorreo, gbc);
+
+        // Fila 4: Celular
+        gbc.gridx = 0; gbc.gridy = 4;
+        panelForm.add(lblCelular, gbc);
+        gbc.gridx = 1;
+        panelForm.add(txtCelular, gbc);
+
+        mainPanel.add(panelForm, BorderLayout.NORTH);
+
+        /*
+         * 2. Panel con la tabla (en el centro)
+         */
+        JPanel panelTabla = new JPanel(new BorderLayout());
+        panelTabla.setBackground(new Color(0xFFFFFF)); // fondo blanco
+        panelTabla.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.GRAY, 1),
+                "Lista de Usuarios",
+                TitledBorder.LEFT,
+                TitledBorder.TOP,
+                new Font("Arial", Font.BOLD, 14),
+                Color.DARK_GRAY
+        ));
+
+        tableModel = new DefaultTableModel(new Object[][]{}, 
+                new String[]{"Tipo ID", "Número ID", "Nombres", "Correo", "Celular"});
+        tablaUsuarios = new JTable(tableModel);
+
+        JScrollPane scrollPane = new JScrollPane(tablaUsuarios);
+        panelTabla.add(scrollPane, BorderLayout.CENTER);
+
+        mainPanel.add(panelTabla, BorderLayout.CENTER);
+
+        /*
+         * 3. Panel de botones (abajo)
+         */
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        panelBotones.setBackground(new Color(0xD2F8D2)); // un verde muy claro
+        panelBotones.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.GRAY, 1),
+                "Acciones",
+                TitledBorder.CENTER,
+                TitledBorder.TOP,
+                new Font("Arial", Font.BOLD, 14),
+                Color.DARK_GRAY
+        ));
+
         JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.addActionListener(this::guardarUsuario);
-
+        // btnGuardar.addActionListener(e -> guardarUsuario());
+        
         JButton btnActualizar = new JButton("Actualizar");
-        btnActualizar.addActionListener(this::actualizarUsuario);
+        // btnActualizar.addActionListener(e -> actualizarUsuario());
 
         JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.addActionListener(this::eliminarUsuario);
+        // btnEliminar.addActionListener(e -> eliminarUsuario());
 
         JButton btnLimpiar = new JButton("Limpiar Datos");
-        btnLimpiar.addActionListener(e -> limpiarCampos());
+        // btnLimpiar.addActionListener(e -> limpiarCampos());
 
         JButton btnSalir = new JButton("Salir");
-        btnSalir.addActionListener(e -> {
-            System.exit(0);
-        });
-        
+        btnSalir.addActionListener(e -> System.exit(0));
+
         panelBotones.add(btnGuardar);
         panelBotones.add(btnActualizar);
         panelBotones.add(btnEliminar);
         panelBotones.add(btnLimpiar);
         panelBotones.add(btnSalir);
 
-        // Tabla de resultados
-        tableModel = new DefaultTableModel();
-        tableModel.addColumn("Tipo ID");
-        tableModel.addColumn("Número ID");
-        tableModel.addColumn("Nombres");
-        tableModel.addColumn("Correo");
-        tableModel.addColumn("Celular");
-
-        tablaUsuarios = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(tablaUsuarios);
-
-        add(panelForm, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
-        add(panelBotones, BorderLayout.SOUTH);
-
-        setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        mainPanel.add(panelBotones, BorderLayout.SOUTH);
     }
 
+    // Ejemplo simple para acomodar un SpringLayout (si no quieres usar SpringUtilities, puedes cambiar a GridBagLayout)
+    private static void makeCompactGrid(JPanel parent, int rows, int cols, int initX, int initY, int xPad, int yPad) {
+        SpringLayout layout = (SpringLayout) parent.getLayout();
+        Spring xPadSpring = Spring.constant(xPad);
+        Spring yPadSpring = Spring.constant(yPad);
+        Spring initialXSpring = Spring.constant(initX);
+        Spring initialYSpring = Spring.constant(initY);
+        Spring maxWidthSpring = Spring.constant(0);
+        Spring maxHeightSpring = Spring.constant(0);
+
+        // Calcular la celda más grande
+        for (int c = 0; c < cols; c++) {
+            Spring maxWidth = Spring.constant(0);
+            for (int r = 0; r < rows; r++) {
+                maxWidth = Spring.max(maxWidth, getConstraintsForCell(r, c, parent, cols).getWidth());
+            }
+            for (int r = 0; r < rows; r++) {
+                SpringLayout.Constraints constraints = getConstraintsForCell(r, c, parent, cols);
+                constraints.setX(Spring.sum(initialXSpring, maxWidthSpring));
+                constraints.setWidth(maxWidth);
+            }
+            maxWidthSpring = Spring.sum(maxWidthSpring, Spring.sum(maxWidth, xPadSpring));
+        }
+
+        for (int r = 0; r < rows; r++) {
+            Spring maxHeight = Spring.constant(0);
+            for (int c = 0; c < cols; c++) {
+                maxHeight = Spring.max(maxHeight, getConstraintsForCell(r, c, parent, cols).getHeight());
+            }
+            for (int c = 0; c < cols; c++) {
+                SpringLayout.Constraints constraints = getConstraintsForCell(r, c, parent, cols);
+                constraints.setY(Spring.sum(initialYSpring, maxHeightSpring));
+                constraints.setHeight(maxHeight);
+            }
+            maxHeightSpring = Spring.sum(maxHeightSpring, Spring.sum(maxHeight, yPadSpring));
+        }
+
+        // Ajustar tamaño del contenedor
+        SpringLayout.Constraints pCons = layout.getConstraints(parent);
+        pCons.setConstraint(SpringLayout.SOUTH, Spring.sum(Spring.constant(initY), maxHeightSpring));
+        pCons.setConstraint(SpringLayout.EAST, Spring.sum(Spring.constant(initX), maxWidthSpring));
+    }
+
+    private static SpringLayout.Constraints getConstraintsForCell(int row, int col, Container parent, int cols) {
+        SpringLayout layout = (SpringLayout) parent.getLayout();
+        Component c = parent.getComponent(row * cols + col);
+        return layout.getConstraints(c);
+    }
     private void cargarDatos() {
         try {
             List<Usuario> usuarios = controller.listarUsuarios();
@@ -132,7 +261,7 @@ public class UsuarioView extends JFrame {
         }
     }
 
-    private void guardarUsuario(ActionEvent e) {
+    private void guardarUsuario() {
         try {
             Usuario usuario = obtenerUsuarioDesdeFormulario();
             controller.crearUsuario(usuario);
@@ -144,7 +273,7 @@ public class UsuarioView extends JFrame {
         }
     }
 
-    private void actualizarUsuario(ActionEvent e) {
+    private void actualizarUsuario() {
         try {
             String nroID = JOptionPane.showInputDialog(this, "Ingrese el Número ID a actualizar:", "Actualizar Usuario", JOptionPane.QUESTION_MESSAGE);
             if (nroID == null || nroID.trim().isEmpty()) {
@@ -204,7 +333,7 @@ public class UsuarioView extends JFrame {
         }
     }
 
-    private void eliminarUsuario(ActionEvent e) {
+    private void eliminarUsuario() {
         try {
             String nroID = JOptionPane.showInputDialog(this, "Ingrese el Número ID a eliminar:", "Eliminar Usuario", JOptionPane.QUESTION_MESSAGE);
             if (nroID == null || nroID.trim().isEmpty()) {
@@ -256,19 +385,6 @@ public class UsuarioView extends JFrame {
     }
 
     public static void main(String[] args) {
-        // Establecer el Look and Feel de FlatLaf
-        try {
-            UIManager.setLookAndFeel(new FlatLightLaf());
-        } catch (UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        }
-        UIManager.put("Button.arc", 999);                  // Esquinas más redondas en botones
-        UIManager.put("Component.focusWidth", 2);          // Grosor del "focus" al hacer tab
-        UIManager.put("Component.focusColor", new Color(0xFF4081)); // Color de foco
-        UIManager.put("TextComponent.arc", 10);            // Esquinas redondeadas en campos de texto
-        UIManager.put("Button.background", new Color(0xC8E6C9));  // Fondo de botones (verde claro)
-        UIManager.put("Panel.background", new Color(0xF2F5F8));
-        // Iniciar la ventana
         SwingUtilities.invokeLater(() -> {
             new UsuarioView().setVisible(true);
         });
