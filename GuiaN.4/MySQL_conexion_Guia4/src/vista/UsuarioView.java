@@ -12,12 +12,10 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.regex.Pattern;
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
@@ -61,19 +59,12 @@ public class UsuarioView extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        /*
-         * Panel principal con borde y separación
-         */
-        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
-        mainPanel.setBorder(new EmptyBorder(10,10,10,10)); // margen alrededor
-        mainPanel.setBackground(new Color(0xF2F5F8));      // fondo gris claro
+         JPanel mainPanel = new JPanel(new BorderLayout(10,10));
+        mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); 
+        mainPanel.setBackground(new Color(0x004aad)); 
         setContentPane(mainPanel);
-
-        /*
-         * 1. Panel Formulario (arriba)
-         */
         JPanel panelForm = new JPanel(new GridBagLayout());
-        panelForm.setBackground(new Color(0xE0E4F8)); // un celeste claro, por ejemplo
+        panelForm.setBackground(new Color(0x38b6ff));
         panelForm.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(Color.GRAY, 1),
                 "Datos de Usuario",
@@ -131,14 +122,9 @@ public class UsuarioView extends JFrame {
         panelForm.add(lblCelular, gbc);
         gbc.gridx = 1;
         panelForm.add(txtCelular, gbc);
-
         mainPanel.add(panelForm, BorderLayout.NORTH);
-
-        /*
-         * 2. Panel con la tabla (en el centro)
-         */
         JPanel panelTabla = new JPanel(new BorderLayout());
-        panelTabla.setBackground(new Color(0xFFFFFF)); // fondo blanco
+        panelTabla.setBackground(new Color(0x5271ff));
         panelTabla.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(Color.GRAY, 1),
                 "Lista de Usuarios",
@@ -156,12 +142,8 @@ public class UsuarioView extends JFrame {
         panelTabla.add(scrollPane, BorderLayout.CENTER);
 
         mainPanel.add(panelTabla, BorderLayout.CENTER);
-
-        /*
-         * 3. Panel de botones (abajo)
-         */
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-        panelBotones.setBackground(new Color(0xD2F8D2)); // un verde muy claro
+        panelBotones.setBackground(new Color(0x38b6ff)); 
         panelBotones.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(Color.GRAY, 1),
                 "Acciones",
