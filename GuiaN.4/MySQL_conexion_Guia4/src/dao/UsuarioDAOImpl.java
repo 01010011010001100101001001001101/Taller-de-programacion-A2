@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
-
 import modelo.Usuario;
 import exceptions.DAOException;
 import java.sql.*;
@@ -11,16 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  *
- * @author Usuario
+ * @author Thomas Sanmiguel y Sebastian Revelo
  */
-
 public class UsuarioDAOImpl implements UsuarioDAO {
     private final Connection connection;
 
     public UsuarioDAOImpl() throws SQLException {
         connection = ConnectionDB.getConnection();
     }
-
     @Override
     public void crear(Usuario usuario) throws DAOException {
         String sql = "INSERT INTO usuario (tipoID, nroID, nombres, correo, celular) VALUES (?, ?, ?, ?, ?)";
@@ -35,7 +28,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             throw new DAOException("Error al crear usuario: " + ex.getMessage(), ex);
         }
     }
-
     @Override
     public Usuario leer(String nroID) throws DAOException {
         String sql = "SELECT * FROM usuario WHERE nroID = ?";
@@ -57,7 +49,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             throw new DAOException("Error al leer usuario: " + ex.getMessage(), ex);
         }
     }
-
     @Override
 public void actualizar(Usuario usuario) throws DAOException {
     String sql = "UPDATE usuario SET tipoID=?, nombres=?, correo=?, celular=? WHERE nroID=?";
@@ -72,8 +63,6 @@ public void actualizar(Usuario usuario) throws DAOException {
         throw new DAOException("Error al actualizar usuario: " + ex.getMessage(), ex);
     }
 }
-
-// Método eliminar modificado
 @Override
 public void eliminar(String nroID) throws DAOException {
     String sql = "DELETE FROM usuario WHERE nroID=?";
@@ -87,7 +76,6 @@ public void eliminar(String nroID) throws DAOException {
         throw new DAOException("Error al eliminar usuario: " + ex.getMessage(), ex);
     }
 }
-
     @Override
     public List<Usuario> listarTodos() throws DAOException {
         List<Usuario> usuarios = new ArrayList<>();

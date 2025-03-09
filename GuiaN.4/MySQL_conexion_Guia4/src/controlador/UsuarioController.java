@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
-
 import dao.UsuarioDAO;
 import dao.UsuarioDAOImpl;
 import modelo.Usuario;
@@ -14,13 +9,10 @@ import java.util.List;
 import java.util.regex.Pattern;
 /**
  *
- * @author Usuario
+ * @author Thomas Sanmiguel y Sebastian Revelo
  */
-
-
 public class UsuarioController {
     private final UsuarioDAO usuarioDAO;
-
     public UsuarioController() throws DAOException {
         try {
             usuarioDAO = new UsuarioDAOImpl();
@@ -28,21 +20,17 @@ public class UsuarioController {
             throw new DAOException("Error al inicializar DAO: " + ex.getMessage(), ex);
         }
     }
-
     public void crearUsuario(Usuario usuario) throws DAOException, ValidationException {
         validarUsuario(usuario);
         usuarioDAO.crear(usuario);
     }
-
     public void actualizarUsuario(Usuario usuario) throws DAOException, ValidationException {
         validarUsuario(usuario);
         usuarioDAO.actualizar(usuario);
     }
-
     public void eliminarUsuario(String nroID) throws DAOException {
         usuarioDAO.eliminar(nroID);
     }
-
     public Usuario buscarUsuario(String nroID) throws DAOException {
     Usuario usuario = usuarioDAO.leer(nroID);
     if (usuario == null) {
@@ -50,11 +38,9 @@ public class UsuarioController {
     }
     return usuario;
 }
-
     public List<Usuario> listarUsuarios() throws DAOException {
         return usuarioDAO.listarTodos();
     }
-
     private void validarUsuario(Usuario usuario) throws ValidationException {
         if (usuario.getTipoID() == null || usuario.getTipoID().trim().isEmpty()) {
             throw new ValidationException("Tipo de ID es requerido");
@@ -78,12 +64,10 @@ public class UsuarioController {
             throw new ValidationException("Celular debe contener solo números");
         }
     }
-
     private boolean validarEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         return Pattern.matches(regex, email);
     }
-
     private boolean validarCelular(String celular) {
         return Pattern.matches("\\d+", celular);
     }
