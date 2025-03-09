@@ -136,11 +136,6 @@ public class UsuarioView extends JFrame {
         panelBotones.add(btnSalir);
         mainPanel.add(panelBotones, BorderLayout.SOUTH);
     }
-    private static SpringLayout.Constraints getConstraintsForCell(int row, int col, Container parent, int cols) {
-        SpringLayout layout = (SpringLayout) parent.getLayout();
-        Component c = parent.getComponent(row * cols + col);
-        return layout.getConstraints(c);
-    }
     private void cargarDatos() {
         try {
             List<Usuario> usuarios = controller.listarUsuarios();
