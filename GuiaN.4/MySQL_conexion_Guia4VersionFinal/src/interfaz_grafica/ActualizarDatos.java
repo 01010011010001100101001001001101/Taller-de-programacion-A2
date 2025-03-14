@@ -1,22 +1,18 @@
 package interfaz_grafica;
-
 import controlador.UsuarioControlador;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
 import util.Validador;
-
 /**
  *
  * @author Thomas Sanmiguel y Sebastián Revelo
  */
 public class ActualizarDatos extends javax.swing.JFrame {
-
     public ActualizarDatos() {
         initComponents();
         btnActualizarDatos.setEnabled(false);
         txtAreaActualizar.setEditable(false);
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
