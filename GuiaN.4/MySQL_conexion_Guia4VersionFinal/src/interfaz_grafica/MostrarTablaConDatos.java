@@ -14,7 +14,24 @@ import modelo.Usuario;
     initComponents();
     btnMostrarTabla.setEnabled(false);
     actualizarTabla();
+    TableDatos.setModel(new DefaultTableModel(
+    new Object[][] {
+        {null, null, null, null, null, null, null, null},
+        {null, null, null, null, null, null, null, null},
+        {null, null, null, null, null, null, null, null},
+        {null, null, null, null, null, null, null, null}
+    },
+    new String[] {
+        "Numero ID", "Tipo ID", "Nombres", "Edad", "Correo", "Celular", "Semestre", "Carrera"
+    }
+) {
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
+});
 }
+    
 private void actualizarTabla() {
     DefaultTableModel model = (DefaultTableModel) TableDatos.getModel();
     model.setRowCount(0);
@@ -209,6 +226,7 @@ private void actualizarTabla() {
     new MenuPrincipal().setVisible(true);
     this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
+    
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
