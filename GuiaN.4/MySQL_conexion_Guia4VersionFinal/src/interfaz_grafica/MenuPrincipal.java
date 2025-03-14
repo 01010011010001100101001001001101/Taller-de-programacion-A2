@@ -7,16 +7,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public MenuPrincipal() {
         initComponents();
     }
- /**private void showpanel(JPanel p){
-     p.setSize(786,600);
-     p.setLocation(0,0);
-     contenido.setLayout(new BorderLayout());
-     contenido.removeAll();
-     contenido.add(p, BorderLayout.CENTER);
-     contenido.revalidate();
-     contenido.repaint();
-     
- }**/
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
