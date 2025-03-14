@@ -3,18 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/controlador/UsuarioControlador.java</file>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/interfaz_grafica/ActualizarDatos.java</file>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/util/Validador.java</file>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/dao/UsuarioDAOImpl.java</file>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/interfaz_grafica/BuscarDatos.java</file>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/modelo/Usuario.java</file>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/interfaz_grafica/AgregarDatos.java</file>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/util/ConexionBD.java</file>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/dao/UsuarioDAO.java</file>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/interfaz_grafica/MostrarTablaConDatos.java</file>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/interfaz_grafica/EliminarDatos.java</file>
-            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4Version2Prueba/src/interfaz_grafica/MenuPrincipal.java</file>
+            <file>file:/C:/Users/Usuario/Downloads/Taller-de-programacion-A2/GuiaN.4/MySQL_conexion_Guia4VersionFinal/src/interfaz_grafica/MostrarTablaConDatos.java</file>
         </group>
     </open-files>
 </project-private>
